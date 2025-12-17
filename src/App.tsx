@@ -58,35 +58,35 @@ const galleryItems = [
   { type: 'video', src: 'https://framerusercontent.com/assets/A4ctABxvbRaq6aq99HPazcljFA.mp4', width: 240, height: 320 },
 ]
 
-// Projects
+// Projects with Framer data
 const projects = [
   {
     id: 1,
     title: 'FinFlow',
-    category: 'Finance App',
-    description: 'A comprehensive finance management platform for modern users.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600',
+    category: 'Product Design',
+    description: 'FinFlow needed an expense tracking platform for startup teams with tight budgets. Existing tools were too complex, so I designed an MVP to provide real-time spending insights for growth and fundraising.',
+    image: 'https://framerusercontent.com/images/btVfj3uYz35Jcg8udVCo6IDHPIw.jpg?scale-down-to=1024',
   },
   {
     id: 2,
     title: 'LaunchPad',
-    category: 'Startup Platform',
-    description: 'Helping startups launch and scale their products effectively.',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600',
+    category: 'UI & UX',
+    description: 'LaunchPad wanted a website builder for founders without coding skills. I designed an intuitive platform for creating MVP landing pages and marketing sites to establish online presence quickly.',
+    image: 'https://framerusercontent.com/images/I2DGsvE6BPFKwR3seUVB72UVU.png?scale-down-to=1024',
   },
   {
     id: 3,
     title: 'HealthSync',
-    category: 'Health Tech',
-    description: 'Connecting patients with healthcare providers seamlessly.',
-    image: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1f?w=600',
+    category: 'Product Design',
+    description: 'HealthSync aimed to provide startup teams accessible telehealth for overwhelmed employees. Traditional healthcare was slow and inaccessible, so I designed an app connecting teams to virtual care.',
+    image: 'https://framerusercontent.com/images/HDv7K6e7EoqUaet9WhVVKwNMpA.png?scale-down-to=1024',
   },
   {
     id: 4,
     title: 'TalentBridge',
-    category: 'HR Platform',
-    description: 'Bridging the gap between talent and opportunity.',
-    image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600',
+    category: 'Visual Design',
+    description: 'TalentBridge aimed to create a hiring platform for startups scaling from 5 to 50 employees. I designed a solution to simplify recruitment while ensuring quality hires.',
+    image: 'https://framerusercontent.com/images/gn78wQvecZqzcGzRKWGkV3NuVE.png?scale-down-to=1024',
   },
 ]
 
@@ -270,17 +270,21 @@ function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-6xl md:text-7xl lg:text-8xl leading-[1.1] text-[#001666] mb-6"
-          style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
+          className="text-5xl sm:text-6xl md:text-7xl lg:text-[80px] leading-[1.05] text-[#001666] mb-4"
+          style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic', fontWeight: 400 }}
         >
-          Product & Visual<br />Designer
+          <span className="inline-block">Product</span>{' '}
+          <span className="inline-block">&</span>{' '}
+          <span className="inline-block">Visual</span>
+          <br />
+          <span className="inline-block">Designer</span>
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-lg md:text-xl text-[#2A3132] mb-10"
+          className="text-base md:text-lg text-[#2A3132] mb-8"
         >
           startups can count on!
         </motion.p>
@@ -292,12 +296,14 @@ function HeroSection() {
           transition={{ duration: 0.5, delay: 0.6 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="inline-flex items-center gap-3 bg-[#FF5900] text-white px-8 py-4 rounded-full font-medium text-base shadow-lg hover:shadow-xl transition-shadow"
+          className="inline-flex items-center gap-2 bg-[#FF5900] text-[#F8F9FA] px-6 py-3 rounded-full font-medium text-sm"
         >
           Get Started
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M5.636 18.364a1 1 0 0 1 0-1.414L16.586 6H10a1 1 0 1 1 0-2h10a1 1 0 0 1 1 1v10a1 1 0 1 1-2 0V8.414L8.05 19.364a1 1 0 0 1-1.414 0l-1-1z" />
-          </svg>
+          <div className="w-5 h-5 flex items-center justify-center">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M7 17L17 7M17 7H7M17 7V17" />
+            </svg>
+          </div>
         </motion.a>
       </div>
     </section>
@@ -393,66 +399,112 @@ function SneakPeakSection() {
   )
 }
 
+// Project Card Component
+function ProjectCard({ project, index }: { project: typeof projects[0], index: number }) {
+  return (
+    <motion.a
+      href="#"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1 }}
+      className="block group"
+    >
+      <motion.div
+        className="bg-[#EBE9E4] border border-[#EBE9E4] rounded-2xl overflow-hidden"
+        whileHover={{ scale: 1.01 }}
+        transition={{ duration: 0.3 }}
+      >
+        {/* Cover Image */}
+        <div className="overflow-hidden rounded-lg m-3">
+          <motion.img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-64 md:h-72 object-cover rounded-lg"
+            whileHover={{ scale: 1.03 }}
+            transition={{ duration: 0.4 }}
+          />
+        </div>
+
+        {/* Content */}
+        <div className="px-5 pb-5">
+          <div className="flex flex-col gap-4">
+            {/* Project Info */}
+            <div>
+              <h3 className="text-xl font-semibold text-[#2A3132] mb-2">
+                {project.title}
+              </h3>
+              <p className="text-sm text-[#767D7E] leading-relaxed">
+                {project.description}
+              </p>
+            </div>
+
+            {/* Category Badge */}
+            <div className="flex items-center justify-between">
+              <span className="inline-block bg-[#2A3132] text-[#F8F6F3] text-xs font-medium px-4 py-1.5 rounded-full">
+                {project.category}
+              </span>
+              <motion.div
+                className="w-8 h-8 bg-[#2A3132] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                whileHover={{ scale: 1.1 }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                  <path d="M7 17L17 7M17 7H7M17 7V17" />
+                </svg>
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+    </motion.a>
+  )
+}
+
 // Works Section
 function WorksSection() {
   return (
-    <section id="works" className="py-32 mt-20 px-8">
-      <div className="max-w-6xl mx-auto">
-        <motion.h2
+    <section id="works" className="py-16 px-8">
+      <div className="max-w-3xl mx-auto">
+        {/* Section Title */}
+        <motion.div
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-5xl md:text-6xl text-[#001666] mb-4"
-          style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
         >
-          Selected Works
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-lg text-[#2A3132]/70 mb-16"
-        >
-          Projects that made an impact
-        </motion.p>
+          <h2
+            className="text-4xl md:text-5xl text-[#001666] mb-3"
+            style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
+          >
+            Design in action
+          </h2>
+          <p className="text-base text-[#5F6566]">
+            Crafting functional, stunning products with founders.
+          </p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+        {/* Project Cards - Vertical Stack */}
+        <div className="flex flex-col gap-6">
           {projects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.15 }}
-              whileHover={{ y: -8 }}
-              className="group cursor-pointer"
-            >
-              <div className="relative overflow-hidden rounded-xl mb-5">
-                <motion.img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-64 object-cover"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.4 }}
-                />
-                <div className="absolute inset-0 bg-[#001666]/0 group-hover:bg-[#001666]/10 transition-colors duration-300" />
-              </div>
-              <span className="text-sm font-medium tracking-wide text-[#FF5900]">
-                {project.category}
-              </span>
-              <h3
-                className="text-2xl text-[#001666] mt-2 mb-2"
-                style={{ fontFamily: "'Playfair Display', serif" }}
-              >
-                {project.title}
-              </h3>
-              <p className="text-[#2A3132]/60">
-                {project.description}
-              </p>
-            </motion.div>
+            <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </div>
+
+        {/* Load More Button */}
+        <motion.div
+          className="text-center mt-10"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="bg-[#FF5900] text-white px-8 py-3 rounded-full font-medium text-sm"
+          >
+            Load More
+          </motion.button>
+        </motion.div>
       </div>
     </section>
   )
