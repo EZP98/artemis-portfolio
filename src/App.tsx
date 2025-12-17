@@ -204,12 +204,12 @@ function ArcText() {
 function Header() {
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-50 px-8 py-6"
+      className="fixed top-0 left-0 right-0 z-50 py-6"
       initial={{ opacity: 0, y: -20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6 }}
     >
-      <nav className="max-w-7xl mx-auto flex items-center justify-center gap-12">
+      <nav className="w-full flex items-center justify-center gap-10">
         <motion.a
           href="#works"
           className="text-sm font-medium text-[#2A3132] hover:text-[#001666] transition-colors"
@@ -224,13 +224,13 @@ function Header() {
         >
           <a href="#" className="block">
             <span
-              className="text-2xl text-[#001666]"
+              className="text-xl text-[#001666] block leading-tight"
               style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
             >
               Artemis &
             </span>
             <span
-              className="block text-xl text-[#001666] -mt-1"
+              className="text-lg text-[#001666] block leading-tight"
               style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
             >
               Artemis
@@ -410,52 +410,59 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
       transition={{ delay: index * 0.1 }}
       className="block group"
     >
-      <motion.div
-        className="bg-[#EBE9E4] border border-[#EBE9E4] rounded-2xl overflow-hidden"
-        whileHover={{ scale: 1.01 }}
-        transition={{ duration: 0.3 }}
+      <div
+        className="rounded-[16px] overflow-hidden"
+        style={{
+          backgroundColor: '#EBE9E4',
+          border: '1px solid #EBE9E4',
+        }}
       >
-        {/* Cover Image */}
-        <div className="overflow-hidden rounded-lg m-3">
-          <motion.img
-            src={project.image}
-            alt={project.title}
-            className="w-full h-64 md:h-72 object-cover rounded-lg"
-            whileHover={{ scale: 1.03 }}
-            transition={{ duration: 0.4 }}
-          />
+        {/* Cover Image Mask */}
+        <div className="p-3 pb-0">
+          <div className="overflow-hidden rounded-lg">
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+            />
+          </div>
         </div>
 
         {/* Content */}
-        <div className="px-5 pb-5">
-          <div className="flex flex-col gap-4">
-            {/* Project Info */}
-            <div>
-              <h3 className="text-xl font-semibold text-[#2A3132] mb-2">
-                {project.title}
-              </h3>
-              <p className="text-sm text-[#767D7E] leading-relaxed">
-                {project.description}
-              </p>
-            </div>
+        <div className="p-4 pt-3">
+          {/* Project Info */}
+          <div className="mb-4">
+            <h5 className="text-lg font-semibold text-[#2A3132] mb-2">
+              {project.title}
+            </h5>
+            <p className="text-sm text-[#767D7E] leading-relaxed">
+              {project.description}
+            </p>
+          </div>
 
-            {/* Category Badge */}
-            <div className="flex items-center justify-between">
-              <span className="inline-block bg-[#2A3132] text-[#F8F6F3] text-xs font-medium px-4 py-1.5 rounded-full">
-                {project.category}
-              </span>
-              <motion.div
-                className="w-8 h-8 bg-[#2A3132] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                whileHover={{ scale: 1.1 }}
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-                  <path d="M7 17L17 7M17 7H7M17 7V17" />
-                </svg>
-              </motion.div>
+          {/* Category Badge & Icon */}
+          <div className="flex items-center justify-between">
+            <span
+              className="inline-block text-xs font-medium rounded-[20px]"
+              style={{
+                backgroundColor: '#2A3132',
+                color: '#F8F6F3',
+                padding: '5px 14px 6px 14px'
+              }}
+            >
+              {project.category}
+            </span>
+            <div
+              className="w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+              style={{ backgroundColor: '#2A3132' }}
+            >
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
+                <path d="M7 17L17 7M17 7H7M17 7V17" />
+              </svg>
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
     </motion.a>
   )
 }
@@ -464,7 +471,7 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
 function WorksSection() {
   return (
     <section id="works" className="py-16 px-8">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         {/* Section Title */}
         <motion.div
           className="text-center mb-12"
@@ -483,8 +490,8 @@ function WorksSection() {
           </p>
         </motion.div>
 
-        {/* Project Cards - Vertical Stack */}
-        <div className="flex flex-col gap-6">
+        {/* Project Cards - Grid 2 columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
