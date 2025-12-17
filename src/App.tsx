@@ -295,8 +295,8 @@ function HeroSection() {
           className="inline-flex items-center gap-3 bg-[#FF5900] text-white px-8 py-4 rounded-full font-medium text-base shadow-lg hover:shadow-xl transition-shadow"
         >
           Get Started
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M7 17L17 7M17 7H7M17 7V17" />
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M5.636 18.364a1 1 0 0 1 0-1.414L16.586 6H10a1 1 0 1 1 0-2h10a1 1 0 0 1 1 1v10a1 1 0 1 1-2 0V8.414L8.05 19.364a1 1 0 0 1-1.414 0l-1-1z" />
           </svg>
         </motion.a>
       </div>
@@ -570,15 +570,24 @@ function Footer() {
   )
 }
 
+// Spacer Component
+function Spacer() {
+  return <div className="h-24 md:h-32" />
+}
+
 // Main App
 function App() {
   return (
     <div className="min-h-screen bg-[#F8F6F3]">
       <Header />
       <HeroSection />
+      <Spacer />
       <SneakPeakSection />
+      <Spacer />
       <WorksSection />
+      <Spacer />
       <AbilitySection />
+      <Spacer />
       <ContactSection />
       <Footer />
     </div>
