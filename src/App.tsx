@@ -294,16 +294,19 @@ function HeroSection() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="inline-flex items-center gap-2 bg-[#FF5900] text-[#F8F9FA] px-6 py-3 rounded-full font-medium text-sm"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="inline-flex items-center gap-2 text-[#F8F9FA] font-medium text-sm"
+          style={{
+            backgroundColor: '#FF5900',
+            padding: '12px 24px',
+            borderRadius: '99px',
+          }}
         >
           Get Started
-          <div className="w-5 h-5 flex items-center justify-center">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M7 17L17 7M17 7H7M17 7V17" />
-            </svg>
-          </div>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M7 17L17 7M17 7H7M17 7V17" />
+          </svg>
         </motion.a>
       </div>
     </section>
@@ -505,9 +508,14 @@ function WorksSection() {
           viewport={{ once: true }}
         >
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-[#FF5900] text-white px-8 py-3 rounded-full font-medium text-sm"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="text-[#F8F6F3] font-medium text-sm"
+            style={{
+              backgroundColor: '#FF5900',
+              padding: '12px 24px',
+              borderRadius: '16px',
+            }}
           >
             Load More
           </motion.button>
@@ -591,12 +599,17 @@ function ContactSection() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          className="inline-flex items-center gap-3 bg-[#FF5900] text-white px-10 py-5 rounded-full font-medium text-lg shadow-lg hover:shadow-xl transition-shadow"
+          whileHover={{ scale: 1.02 }}
+          whileTap={{ scale: 0.98 }}
+          className="inline-flex items-center gap-2 text-[#F8F6F3] font-medium text-base"
+          style={{
+            backgroundColor: '#FF5900',
+            padding: '14px 28px',
+            borderRadius: '99px',
+          }}
         >
           Get in Touch
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <path d="M7 17L17 7M17 7H7M17 7V17" />
           </svg>
         </motion.a>
