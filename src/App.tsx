@@ -1,25 +1,57 @@
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, useMotionValue } from 'framer-motion'
 
-// Floating images for hero section
+// Hero draggable images with exact positions and rotations from Framer
 const heroImages = [
-  { id: 1, x: 80, y: 120, w: 180, h: 220, rotate: -8, image: 'https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=400' },
-  { id: 2, x: 280, y: 80, w: 160, h: 200, rotate: 5, image: 'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=400' },
-  { id: 3, x: 900, y: 100, w: 200, h: 240, rotate: 8, image: 'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=400' },
-  { id: 4, x: 1100, y: 140, w: 170, h: 210, rotate: -6, image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=400' },
+  {
+    id: 1,
+    x: '8%',
+    y: '25%',
+    w: 198,
+    h: 157,
+    rotate: -25,
+    image: 'https://framerusercontent.com/images/NUTdkRLYEoKo3q0xaYuGtoBUg.jpg?scale-down-to=512'
+  },
+  {
+    id: 2,
+    x: '18%',
+    y: '55%',
+    w: 183,
+    h: 170,
+    rotate: -19,
+    image: 'https://framerusercontent.com/images/v9by2y3t7Fgrb9sTYB57w099Lk.jpg?scale-down-to=512'
+  },
+  {
+    id: 3,
+    x: '72%',
+    y: '15%',
+    w: 142,
+    h: 142,
+    rotate: 12,
+    image: 'https://framerusercontent.com/images/GfQF9MJTOQgip3GZt7WYQlFA.png?scale-down-to=512'
+  },
+  {
+    id: 4,
+    x: '75%',
+    y: '50%',
+    w: 160,
+    h: 224,
+    rotate: 32,
+    image: 'https://framerusercontent.com/images/sOV9oVng8G6eTcJz9mcCnJarYGE.jpg?scale-down-to=512'
+  },
 ]
 
-// Gallery images for sneak peak section
+// Gallery images
 const galleryImages = [
+  'https://framerusercontent.com/images/NUTdkRLYEoKo3q0xaYuGtoBUg.jpg?scale-down-to=1024',
+  'https://framerusercontent.com/images/v9by2y3t7Fgrb9sTYB57w099Lk.jpg?scale-down-to=1024',
+  'https://framerusercontent.com/images/GfQF9MJTOQgip3GZt7WYQlFA.png?scale-down-to=1024',
+  'https://framerusercontent.com/images/sOV9oVng8G6eTcJz9mcCnJarYGE.jpg?scale-down-to=1024',
   'https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=600',
   'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600',
-  'https://images.unsplash.com/photo-1529139574466-a303027c1d8b?w=600',
-  'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600',
-  'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=600',
-  'https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=600',
 ]
 
-// Works/Projects
+// Projects
 const projects = [
   {
     id: 1,
@@ -51,7 +83,7 @@ const projects = [
   },
 ]
 
-// Skills/Abilities
+// Skills
 const skills = [
   { name: 'UI Design', rotate: -5 },
   { name: 'UX Research', rotate: 3 },
@@ -61,11 +93,9 @@ const skills = [
   { name: 'Framer', rotate: 2 },
   { name: 'Motion Design', rotate: -6 },
   { name: 'User Testing', rotate: 4 },
-  { name: 'Wireframing', rotate: -2 },
-  { name: 'Visual Design', rotate: 5 },
 ]
 
-// Draggable Hero Image
+// Draggable Image Component
 function DraggableImage({ item }: { item: typeof heroImages[0] }) {
   const x = useMotionValue(0)
   const y = useMotionValue(0)
@@ -90,12 +120,16 @@ function DraggableImage({ item }: { item: typeof heroImages[0] }) {
         zIndex: isDragging ? 100 : 10,
         cursor: 'grab',
       }}
-      whileDrag={{ cursor: 'grabbing', scale: 1.05, boxShadow: '0 25px 50px -12px rgba(0, 22, 102, 0.25)' }}
+      whileDrag={{
+        cursor: 'grabbing',
+        scale: 1.05,
+        boxShadow: '0 25px 50px -12px rgba(0, 22, 102, 0.3)'
+      }}
       whileHover={{ scale: 1.02 }}
-      initial={{ opacity: 0, y: 30 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8, delay: item.id * 0.1 }}
-      className="select-none rounded-2xl overflow-hidden shadow-xl"
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.6, delay: item.id * 0.15 }}
+      className="select-none rounded-lg overflow-hidden shadow-xl"
     >
       <img
         src={item.image}
@@ -107,122 +141,180 @@ function DraggableImage({ item }: { item: typeof heroImages[0] }) {
   )
 }
 
-// Arc Text Component
-function ArcText({ text }: { text: string }) {
+// Arc Text Component - "This is Artemis"
+function ArcText() {
+  const [rotation, setRotation] = useState(0)
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRotation(prev => prev + 0.5)
+    }, 50)
+    return () => clearInterval(interval)
+  }, [])
+
   return (
-    <div className="relative w-64 h-64">
-      <svg viewBox="0 0 256 256" className="w-full h-full">
+    <motion.div
+      className="absolute w-40 h-40"
+      style={{
+        left: '50%',
+        top: '35%',
+        transform: 'translate(-50%, -50%)',
+      }}
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.8, delay: 0.5 }}
+    >
+      <svg
+        viewBox="0 0 100 100"
+        className="w-full h-full"
+        style={{ transform: `rotate(${rotation}deg)` }}
+      >
         <defs>
           <path
             id="textCircle"
-            d="M 128,128 m -100,0 a 100,100 0 1,1 200,0 a 100,100 0 1,1 -200,0"
+            d="M 50,50 m -35,0 a 35,35 0 1,1 70,0 a 35,35 0 1,1 -70,0"
+            fill="none"
           />
         </defs>
-        <text className="fill-[#001666] text-[14px] font-medium tracking-[0.3em]">
+        <text
+          className="text-[4px] tracking-[0.15em]"
+          style={{
+            fontFamily: "'DM Sans', sans-serif",
+            fill: '#2A3132',
+            fontWeight: 400,
+          }}
+        >
           <textPath href="#textCircle" startOffset="0%">
-            {text}
+            This is Artemis • This is Artemis • This is Artemis •
           </textPath>
         </text>
       </svg>
-      <motion.div
-        className="absolute inset-0 flex items-center justify-center"
-        animate={{ rotate: 360 }}
-        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-      >
-        <div className="w-16 h-16 rounded-full bg-[#FF5900] flex items-center justify-center">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </div>
-      </motion.div>
-    </div>
+    </motion.div>
+  )
+}
+
+// Navigation Header
+function Header() {
+  return (
+    <motion.header
+      className="fixed top-0 left-0 right-0 z-50 px-8 py-6"
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+    >
+      <nav className="max-w-7xl mx-auto flex items-center justify-center gap-12">
+        <motion.a
+          href="#works"
+          className="text-sm font-medium text-[#2A3132] hover:text-[#001666] transition-colors"
+          whileHover={{ y: -2 }}
+        >
+          Works
+        </motion.a>
+
+        <motion.div
+          className="text-center"
+          whileHover={{ scale: 1.02 }}
+        >
+          <a href="#" className="block">
+            <span
+              className="text-2xl text-[#001666]"
+              style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
+            >
+              Artemis &
+            </span>
+            <span
+              className="block text-xl text-[#001666] -mt-1"
+              style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
+            >
+              Artemis
+            </span>
+          </a>
+        </motion.div>
+
+        <motion.a
+          href="#playground"
+          className="text-sm font-medium text-[#2A3132] hover:text-[#001666] transition-colors"
+          whileHover={{ y: -2 }}
+        >
+          Playground
+        </motion.a>
+      </nav>
+    </motion.header>
   )
 }
 
 // Hero Section
 function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden px-8 py-20">
-      {/* Floating Images */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="relative w-full h-full pointer-events-auto">
-          {heroImages.map((item) => (
-            <DraggableImage key={item.id} item={item} />
-          ))}
-        </div>
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      {/* Floating Draggable Images */}
+      <div className="absolute inset-0">
+        {heroImages.map((item) => (
+          <DraggableImage key={item.id} item={item} />
+        ))}
       </div>
 
-      {/* Center Content */}
-      <div className="relative z-20 text-center max-w-4xl mx-auto">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-sm font-medium tracking-widest text-[#001666]/60 mb-4"
-        >
-          HELLO, I'M ARTEMIS
-        </motion.p>
+      {/* Arc Text */}
+      <ArcText />
 
+      {/* Center Content */}
+      <div className="relative z-20 text-center max-w-4xl mx-auto px-8">
         <motion.h1
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.1 }}
-          className="text-6xl md:text-8xl font-black leading-none tracking-tight text-[#001666] mb-6"
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="text-6xl md:text-7xl lg:text-8xl leading-[1.1] text-[#001666] mb-6"
+          style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
         >
-          Product &<br />Visual Designer
+          Product & Visual<br />Designer
         </motion.h1>
 
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="text-2xl md:text-3xl font-medium text-[#001666]/80 mb-8"
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="text-lg md:text-xl text-[#2A3132] mb-10"
         >
           startups can count on!
         </motion.p>
 
-        <motion.button
+        <motion.a
+          href="#contact"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="bg-[#FF5900] text-white px-8 py-4 rounded-full font-semibold text-lg shadow-lg hover:shadow-xl transition-shadow"
+          className="inline-flex items-center gap-3 bg-[#FF5900] text-white px-8 py-4 rounded-full font-medium text-base shadow-lg hover:shadow-xl transition-shadow"
         >
           Get Started
-        </motion.button>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M7 17L17 7M17 7H7M17 7V17" />
+          </svg>
+        </motion.a>
       </div>
-
-      {/* Arc Text - Bottom Right */}
-      <motion.div
-        initial={{ opacity: 0, rotate: -20 }}
-        animate={{ opacity: 1, rotate: 0 }}
-        transition={{ duration: 1, delay: 0.5 }}
-        className="absolute bottom-20 right-20 hidden lg:block"
-      >
-        <ArcText text="THIS IS ARTEMIS • THIS IS ARTEMIS • " />
-      </motion.div>
     </section>
   )
 }
 
-// Sneak Peak Section - Horizontal Scroll Gallery
+// Sneak Peak Gallery Section
 function SneakPeakSection() {
   const containerRef = useRef<HTMLDivElement>(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start end', 'end start'],
   })
-  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-30%'])
+  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-25%'])
 
   return (
-    <section ref={containerRef} className="py-20 overflow-hidden">
+    <section ref={containerRef} className="py-24 overflow-hidden">
       <div className="px-8 mb-12">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-5xl md:text-6xl font-black text-[#001666] mb-4"
+          className="text-5xl md:text-6xl text-[#001666] mb-4"
+          style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
         >
           Sneak Peak
         </motion.h2>
@@ -231,7 +323,7 @@ function SneakPeakSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-xl text-[#001666]/60"
+          className="text-lg text-[#2A3132]/70"
         >
           A glimpse into my creative world
         </motion.p>
@@ -246,7 +338,7 @@ function SneakPeakSection() {
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
             whileHover={{ scale: 1.02, rotate: index % 2 === 0 ? 2 : -2 }}
-            className="flex-shrink-0 w-80 h-96 rounded-2xl overflow-hidden shadow-lg"
+            className="flex-shrink-0 w-72 h-80 rounded-xl overflow-hidden shadow-lg"
           >
             <img
               src={image}
@@ -263,13 +355,14 @@ function SneakPeakSection() {
 // Works Section
 function WorksSection() {
   return (
-    <section className="py-20 px-8">
-      <div className="max-w-7xl mx-auto">
+    <section id="works" className="py-24 px-8">
+      <div className="max-w-6xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-5xl md:text-6xl font-black text-[#001666] mb-4"
+          className="text-5xl md:text-6xl text-[#001666] mb-4"
+          style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
         >
           Selected Works
         </motion.h2>
@@ -278,12 +371,12 @@ function WorksSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-xl text-[#001666]/60 mb-16"
+          className="text-lg text-[#2A3132]/70 mb-16"
         >
           Projects that made an impact
         </motion.p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {projects.map((project, index) => (
             <motion.div
               key={project.id}
@@ -291,26 +384,29 @@ function WorksSection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.15 }}
-              whileHover={{ y: -10 }}
+              whileHover={{ y: -8 }}
               className="group cursor-pointer"
             >
-              <div className="relative overflow-hidden rounded-2xl mb-4">
+              <div className="relative overflow-hidden rounded-xl mb-5">
                 <motion.img
                   src={project.image}
                   alt={project.title}
-                  className="w-full h-72 object-cover"
+                  className="w-full h-64 object-cover"
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.4 }}
                 />
-                <div className="absolute inset-0 bg-[#001666]/0 group-hover:bg-[#001666]/20 transition-colors duration-300" />
+                <div className="absolute inset-0 bg-[#001666]/0 group-hover:bg-[#001666]/10 transition-colors duration-300" />
               </div>
-              <span className="text-sm font-medium tracking-wider text-[#FF5900]">
+              <span className="text-sm font-medium tracking-wide text-[#FF5900]">
                 {project.category}
               </span>
-              <h3 className="text-2xl font-bold text-[#001666] mt-1 mb-2">
+              <h3
+                className="text-2xl text-[#001666] mt-2 mb-2"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
                 {project.title}
               </h3>
-              <p className="text-[#001666]/60">
+              <p className="text-[#2A3132]/60">
                 {project.description}
               </p>
             </motion.div>
@@ -324,13 +420,14 @@ function WorksSection() {
 // Ability Section
 function AbilitySection() {
   return (
-    <section className="py-20 px-8 bg-[#001666]">
-      <div className="max-w-7xl mx-auto">
+    <section className="py-24 px-8 bg-[#001666]">
+      <div className="max-w-6xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-5xl md:text-6xl font-black text-white mb-4"
+          className="text-5xl md:text-6xl text-white mb-4"
+          style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
         >
           My Abilities
         </motion.h2>
@@ -339,7 +436,7 @@ function AbilitySection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-xl text-white/60 mb-16"
+          className="text-lg text-white/60 mb-16"
         >
           Tools & skills I bring to the table
         </motion.p>
@@ -368,13 +465,14 @@ function AbilitySection() {
 // Contact Section
 function ContactSection() {
   return (
-    <section className="py-32 px-8">
+    <section id="contact" className="py-32 px-8">
       <div className="max-w-4xl mx-auto text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-5xl md:text-7xl font-black text-[#001666] mb-6"
+          className="text-5xl md:text-7xl text-[#001666] mb-6"
+          style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
         >
           Let's Work<br />Together
         </motion.h2>
@@ -383,7 +481,7 @@ function ContactSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="text-xl text-[#001666]/60 mb-12"
+          className="text-lg text-[#2A3132]/70 mb-12"
         >
           Have a project in mind? Let's create something amazing.
         </motion.p>
@@ -395,9 +493,12 @@ function ContactSection() {
           transition={{ delay: 0.2 }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="inline-block bg-[#FF5900] text-white px-10 py-5 rounded-full font-semibold text-xl shadow-lg hover:shadow-xl transition-shadow"
+          className="inline-flex items-center gap-3 bg-[#FF5900] text-white px-10 py-5 rounded-full font-medium text-lg shadow-lg hover:shadow-xl transition-shadow"
         >
           Get in Touch
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M7 17L17 7M17 7H7M17 7V17" />
+          </svg>
         </motion.a>
       </div>
     </section>
@@ -408,8 +509,8 @@ function ContactSection() {
 function Footer() {
   return (
     <footer className="py-8 px-8 border-t border-[#001666]/10">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
-        <p className="text-sm text-[#001666]/50">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+        <p className="text-sm text-[#2A3132]/50">
           © 2025 Artemis. All rights reserved.
         </p>
         <div className="flex gap-6">
@@ -417,7 +518,7 @@ function Footer() {
             <a
               key={social}
               href="#"
-              className="text-sm text-[#001666]/50 hover:text-[#001666] transition-colors"
+              className="text-sm text-[#2A3132]/50 hover:text-[#001666] transition-colors"
             >
               {social}
             </a>
@@ -431,7 +532,8 @@ function Footer() {
 // Main App
 function App() {
   return (
-    <div className="min-h-screen bg-[#EBE9E4]">
+    <div className="min-h-screen bg-[#F8F6F3]">
+      <Header />
       <HeroSection />
       <SneakPeakSection />
       <WorksSection />
