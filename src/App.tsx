@@ -1,5 +1,5 @@
-import { useRef, useState, useEffect } from 'react'
-import { motion, useScroll, useTransform, useMotionValue } from 'framer-motion'
+import { useState, useEffect } from 'react'
+import { motion, useMotionValue } from 'framer-motion'
 
 // Hero draggable images with exact positions and rotations from Framer
 const heroImages = [
@@ -41,14 +41,21 @@ const heroImages = [
   },
 ]
 
-// Gallery images
-const galleryImages = [
-  'https://framerusercontent.com/images/NUTdkRLYEoKo3q0xaYuGtoBUg.jpg?scale-down-to=1024',
-  'https://framerusercontent.com/images/v9by2y3t7Fgrb9sTYB57w099Lk.jpg?scale-down-to=1024',
-  'https://framerusercontent.com/images/GfQF9MJTOQgip3GZt7WYQlFA.png?scale-down-to=1024',
-  'https://framerusercontent.com/images/sOV9oVng8G6eTcJz9mcCnJarYGE.jpg?scale-down-to=1024',
-  'https://images.unsplash.com/photo-1561214115-f2f134cc4912?w=600',
-  'https://images.unsplash.com/photo-1509631179647-0177331693ae?w=600',
+// Gallery items for infinite marquee - mixed images and videos with varying heights
+const galleryItems = [
+  { type: 'image', src: 'https://framerusercontent.com/images/sOV9oVng8G6eTcJz9mcCnJarYGE.jpg?scale-down-to=512', width: 259, height: 363 },
+  { type: 'image', src: 'https://framerusercontent.com/images/bItSXFPavhU2dit81jnbKTXR0JE.jpg?scale-down-to=512', width: 225, height: 300 },
+  { type: 'video', src: 'https://framerusercontent.com/assets/2DpNdbCobj1SacO4OMpr1IvlGE.mp4', width: 280, height: 374 },
+  { type: 'image', src: 'https://framerusercontent.com/images/mTIgomHRzjbLd0XLW5T7qOrhxU.jpg?scale-down-to=512', width: 232, height: 290 },
+  { type: 'image', src: 'https://framerusercontent.com/images/v9by2y3t7Fgrb9sTYB57w099Lk.jpg?scale-down-to=512', width: 339, height: 315 },
+  { type: 'image', src: 'https://framerusercontent.com/images/40YISsvwSJc4RxvqVYZATAMwlM.jpg?scale-down-to=512', width: 232, height: 191 },
+  { type: 'image', src: 'https://framerusercontent.com/images/W6EKuDKZ6ilw7quzpU9IfkL248E.jpg?scale-down-to=512', width: 250, height: 333 },
+  { type: 'image', src: 'https://framerusercontent.com/images/5gmEX58ZB6E6bhMpCUhzutgd48.jpg?scale-down-to=512', width: 266, height: 328 },
+  { type: 'image', src: 'https://framerusercontent.com/images/EkqBLYkO1YzBqFZ5QtGCbxnKg.jpg?scale-down-to=512', width: 217, height: 271 },
+  { type: 'image', src: 'https://framerusercontent.com/images/Hhqb6e3FMAW5LJAIbJ1sxl6Dnhg.jpg?scale-down-to=512', width: 299, height: 374 },
+  { type: 'video', src: 'https://framerusercontent.com/assets/216jYTG59MjWaGTdoFmxyKeLs2Q.mp4', width: 260, height: 340 },
+  { type: 'image', src: 'https://framerusercontent.com/images/c6idvUjrSpE7PPwnzZRpEBQoLiA.png', width: 200, height: 200 },
+  { type: 'video', src: 'https://framerusercontent.com/assets/A4ctABxvbRaq6aq99HPazcljFA.mp4', width: 240, height: 320 },
 ]
 
 // Projects
@@ -297,57 +304,91 @@ function HeroSection() {
   )
 }
 
-// Sneak Peak Gallery Section
-function SneakPeakSection() {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start'],
-  })
-  const x = useTransform(scrollYProgress, [0, 1], ['0%', '-25%'])
-
+// Telescope Icon
+function TelescopeIcon() {
   return (
-    <section ref={containerRef} className="py-24 overflow-hidden">
-      <div className="px-8 mb-12">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-5xl md:text-6xl text-[#001666] mb-4"
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#001666]">
+      <path d="m10.065 12.493-6.18 1.318a.934.934 0 0 1-1.108-.702l-.537-2.15a1.07 1.07 0 0 1 .691-1.265l13.504-4.44" />
+      <path d="m13.56 11.747 4.332-.924" />
+      <path d="m16 21-3.105-6.21" />
+      <path d="M16.485 5.94a2 2 0 0 1 1.455-2.425l1.09-.272a1 1 0 0 1 1.212.727l1.515 6.06a1 1 0 0 1-.727 1.213l-1.09.272a2 2 0 0 1-2.425-1.455z" />
+      <path d="m6.158 8.633 1.114 4.456" />
+      <path d="m8 21 3.105-6.21" />
+    </svg>
+  )
+}
+
+// Marquee Item Component
+function MarqueeItem({ item, index }: { item: typeof galleryItems[0], index: number }) {
+  return (
+    <div
+      className="flex-shrink-0 rounded-lg overflow-hidden"
+      style={{ width: item.width, height: item.height }}
+    >
+      {item.type === 'video' ? (
+        <video
+          src={item.src}
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover"
+        />
+      ) : (
+        <img
+          src={item.src}
+          alt={`Gallery ${index + 1}`}
+          className="w-full h-full object-cover"
+        />
+      )}
+    </div>
+  )
+}
+
+// Sneak Peak Gallery Section - Infinite Marquee
+function SneakPeakSection() {
+  return (
+    <section id="sneak-peak" className="py-32 mt-20 overflow-hidden">
+      {/* Section Title */}
+      <motion.div
+        className="flex items-center justify-center gap-3 mb-12"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+      >
+        <TelescopeIcon />
+        <h2
+          className="text-3xl md:text-4xl text-[#001666]"
           style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
         >
-          Sneak Peak
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-lg text-[#2A3132]/70"
-        >
-          A glimpse into my creative world
-        </motion.p>
-      </div>
-
-      <motion.div style={{ x }} className="flex gap-6 pl-8">
-        {galleryImages.map((image, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.1 }}
-            whileHover={{ scale: 1.02, rotate: index % 2 === 0 ? 2 : -2 }}
-            className="flex-shrink-0 w-72 h-80 rounded-xl overflow-hidden shadow-lg"
-          >
-            <img
-              src={image}
-              alt={`Gallery ${index + 1}`}
-              className="w-full h-full object-cover"
-            />
-          </motion.div>
-        ))}
+          Sneak peak of my works
+        </h2>
       </motion.div>
+
+      {/* Infinite Marquee */}
+      <div className="relative">
+        <motion.div
+          className="flex items-end gap-6"
+          animate={{ x: [0, -4311] }}
+          transition={{
+            x: {
+              repeat: Infinity,
+              repeatType: "loop",
+              duration: 40,
+              ease: "linear",
+            },
+          }}
+        >
+          {/* First set */}
+          {galleryItems.map((item, index) => (
+            <MarqueeItem key={`set1-${index}`} item={item} index={index} />
+          ))}
+          {/* Duplicate for seamless loop */}
+          {galleryItems.map((item, index) => (
+            <MarqueeItem key={`set2-${index}`} item={item} index={index} />
+          ))}
+        </motion.div>
+      </div>
     </section>
   )
 }
@@ -355,7 +396,7 @@ function SneakPeakSection() {
 // Works Section
 function WorksSection() {
   return (
-    <section id="works" className="py-24 px-8">
+    <section id="works" className="py-32 mt-20 px-8">
       <div className="max-w-6xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -420,7 +461,7 @@ function WorksSection() {
 // Ability Section
 function AbilitySection() {
   return (
-    <section className="py-24 px-8 bg-[#001666]">
+    <section className="py-32 mt-20 px-8 bg-[#001666]">
       <div className="max-w-6xl mx-auto">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
