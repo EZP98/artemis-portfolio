@@ -90,16 +90,17 @@ const projects = [
   },
 ]
 
-// Skills
+// Skills with exact rotations and transforms from Framer
 const skills = [
-  { name: 'UI Design', rotate: -5 },
-  { name: 'UX Research', rotate: 3 },
-  { name: 'Prototyping', rotate: -3 },
-  { name: 'Design Systems', rotate: 6 },
-  { name: 'Figma', rotate: -4 },
-  { name: 'Framer', rotate: 2 },
-  { name: 'Motion Design', rotate: -6 },
-  { name: 'User Testing', rotate: 4 },
+  { name: 'Framer Development', rotate: -4, transform: '' },
+  { name: 'Branding', rotate: 9, transform: '' },
+  { name: 'Visual Design', rotate: -15, transform: '' },
+  { name: 'User Interface Design', rotate: 7, transform: '' },
+  { name: 'Product Design', rotate: -10, transform: 'translateX(-50%)' },
+  { name: 'User Experience Design', rotate: -9, transform: '' },
+  { name: 'User Research', rotate: -7, transform: 'translateY(-50%)' },
+  { name: 'Pitch Deck Design', rotate: 3, transform: '' },
+  { name: 'Design Systems', rotate: 8, transform: '' },
 ]
 
 // Draggable Image Component
@@ -357,7 +358,7 @@ function MarqueeItem({ item, index }: { item: typeof galleryItems[0], index: num
 // Sneak Peak Gallery Section - Infinite Marquee
 function SneakPeakSection() {
   return (
-    <section id="sneak-peak" className="py-32 mt-20 overflow-hidden">
+    <section id="sneak-peak" className="py-24 overflow-hidden">
       {/* Section Title */}
       <motion.div
         className="flex items-center justify-center gap-3 mb-12"
@@ -411,54 +412,29 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
-      className="block group"
+      className="block"
     >
-      <div
-        className="rounded-[16px] overflow-hidden"
-        style={{
-          backgroundColor: '#EBE9E4',
-          border: '1px solid #EBE9E4',
-        }}
-      >
-        {/* Cover Image Mask */}
-        <div className="p-3 pb-0">
-          <div className="overflow-hidden rounded-lg">
-            <img
-              src={project.image}
-              alt={project.title}
-              className="w-full aspect-[4/3] object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-            />
-          </div>
+      <div className="project-card">
+        {/* Cover Mask */}
+        <div className="project-card-cover">
+          <img
+            src={project.image}
+            alt={project.title}
+          />
         </div>
 
         {/* Content */}
-        <div className="p-4 pt-3">
+        <div className="project-card-content">
           {/* Project Info */}
-          <div className="mb-4">
-            <h5 className="text-lg font-semibold text-[#2A3132] mb-2">
-              {project.title}
-            </h5>
-            <p className="text-sm text-[#767D7E] leading-relaxed">
-              {project.description}
-            </p>
+          <div className="project-card-info">
+            <h5 className="project-card-title">{project.title}</h5>
+            <p className="project-card-description">{project.description}</p>
           </div>
 
-          {/* Category Badge & Icon */}
-          <div className="flex items-center justify-between">
-            <span
-              className="inline-block text-xs font-medium rounded-[20px]"
-              style={{
-                backgroundColor: '#2A3132',
-                color: '#F8F6F3',
-                padding: '5px 14px 6px 14px'
-              }}
-            >
-              {project.category}
-            </span>
-            <div
-              className="w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-              style={{ backgroundColor: '#2A3132' }}
-            >
+          {/* Category & Icon Row */}
+          <div className="project-card-footer">
+            <span className="project-card-badge">{project.category}</span>
+            <div className="project-card-icon">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
                 <path d="M7 17L17 7M17 7H7M17 7V17" />
               </svg>
@@ -473,11 +449,11 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
 // Works Section
 function WorksSection() {
   return (
-    <section id="works" className="py-16 px-8">
-      <div className="max-w-5xl mx-auto">
+    <section id="works" className="works-section">
+      <div className="works-container">
         {/* Section Title */}
         <motion.div
-          className="text-center mb-12"
+          className="text-center mb-16 px-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -494,7 +470,7 @@ function WorksSection() {
         </motion.div>
 
         {/* Project Cards - Grid 2 columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="works-grid">
           {projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
@@ -502,7 +478,7 @@ function WorksSection() {
 
         {/* Load More Button */}
         <motion.div
-          className="text-center mt-10"
+          className="text-center mt-12"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -514,7 +490,7 @@ function WorksSection() {
             style={{
               backgroundColor: '#FF5900',
               padding: '12px 24px',
-              borderRadius: '16px',
+              borderRadius: '99px',
             }}
           >
             Load More
@@ -525,46 +501,53 @@ function WorksSection() {
   )
 }
 
+// Star Icon - matching Framer
+function StarIcon() {
+  return (
+    <svg width="25" height="25" viewBox="0 0 25 25" fill="#001666">
+      <path d="M12.5 0L15.5 9.5L25 12.5L15.5 15.5L12.5 25L9.5 15.5L0 12.5L9.5 9.5L12.5 0Z" />
+    </svg>
+  )
+}
+
 // Ability Section
 function AbilitySection() {
   return (
-    <section className="py-32 mt-20 px-8 bg-[#001666]">
-      <div className="max-w-6xl mx-auto">
-        <motion.h2
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-5xl md:text-6xl text-white mb-4"
-          style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
-        >
-          My Abilities
-        </motion.h2>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-lg text-white/60 mb-16"
-        >
-          Tools & skills I bring to the table
-        </motion.p>
+    <section id="ability" className="ability-section">
+      {/* Tags Container */}
+      <div className="ability-tags">
+        {skills.map((skill, index) => (
+          <motion.div
+            key={skill.name}
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.05 }}
+            whileHover={{ scale: 1.1, rotate: 0 }}
+            className="ability-tag"
+            style={{
+              transform: `${skill.transform} rotate(${skill.rotate}deg)`,
+            }}
+          >
+            <span>{skill.name}</span>
+          </motion.div>
+        ))}
+      </div>
 
-        <div className="flex flex-wrap gap-4 justify-center">
-          {skills.map((skill, index) => (
-            <motion.div
-              key={skill.name}
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.05 }}
-              whileHover={{ scale: 1.1, rotate: 0 }}
-              style={{ rotate: skill.rotate }}
-              className="bg-white/10 backdrop-blur-sm border border-white/20 px-6 py-3 rounded-full"
-            >
-              <span className="text-white font-medium">{skill.name}</span>
-            </motion.div>
-          ))}
+      {/* Content */}
+      <div className="ability-content">
+        <div className="ability-title-row">
+          <StarIcon />
+          <h2
+            className="ability-title"
+            style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
+          >
+            What I bring to the table
+          </h2>
         </div>
+        <p className="ability-description">
+          Digital experiences that engage users and help your startup stand out from day one
+        </p>
       </div>
     </section>
   )
@@ -573,7 +556,7 @@ function AbilitySection() {
 // Contact Section
 function ContactSection() {
   return (
-    <section id="contact" className="py-32 px-8">
+    <section id="contact" className="py-32 px-8 md:px-16">
       <div className="max-w-4xl mx-auto text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
@@ -642,24 +625,19 @@ function Footer() {
   )
 }
 
-// Spacer Component
-function Spacer() {
-  return <div className="h-24 md:h-32" />
-}
-
 // Main App
 function App() {
   return (
     <div className="min-h-screen bg-[#F8F6F3]">
       <Header />
       <HeroSection />
-      <Spacer />
+      <div className="h-40 md:h-56" />
       <SneakPeakSection />
-      <Spacer />
+      <div className="h-40 md:h-56" />
       <WorksSection />
-      <Spacer />
+      <div className="h-40 md:h-56" />
       <AbilitySection />
-      <Spacer />
+      <div className="h-40 md:h-56" />
       <ContactSection />
       <Footer />
     </div>
