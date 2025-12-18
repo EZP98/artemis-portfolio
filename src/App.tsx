@@ -412,29 +412,37 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ delay: index * 0.1 }}
-      className="block"
+      className="block no-underline group"
     >
-      <div className="project-card">
+      {/* Card Container */}
+      <div className="bg-cream-dark rounded-2xl p-3 flex flex-col w-full border border-cream-dark">
         {/* Cover Mask */}
-        <div className="project-card-cover">
+        <div className="rounded-lg overflow-hidden w-full aspect-[4/3]">
           <img
             src={project.image}
             alt={project.title}
+            className="block w-full h-full object-cover object-center"
           />
         </div>
 
         {/* Content */}
-        <div className="project-card-content">
+        <div className="flex flex-col pt-4 px-1 pb-1 gap-4">
           {/* Project Info */}
-          <div className="project-card-info">
-            <h5 className="project-card-title">{project.title}</h5>
-            <p className="project-card-description">{project.description}</p>
+          <div className="flex flex-col gap-2">
+            <h5 className="text-lg font-semibold text-dark-gray m-0 text-left">
+              {project.title}
+            </h5>
+            <p className="text-sm text-gray m-0 leading-relaxed text-left">
+              {project.description}
+            </p>
           </div>
 
           {/* Category & Icon Row */}
-          <div className="project-card-footer">
-            <span className="project-card-badge">{project.category}</span>
-            <div className="project-card-icon">
+          <div className="flex items-center justify-between">
+            <span className="bg-dark-gray text-cream py-1.5 px-3.5 rounded-[20px] text-xs font-medium">
+              {project.category}
+            </span>
+            <div className="w-8 h-8 bg-dark-gray rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
                 <path d="M7 17L17 7M17 7H7M17 7V17" />
               </svg>
@@ -449,8 +457,8 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
 // Works Section
 function WorksSection() {
   return (
-    <section id="works" className="works-section">
-      <div className="works-container">
+    <section id="works" className="py-24 w-full">
+      <div className="w-full flex flex-col items-center justify-center">
         {/* Section Title */}
         <motion.div
           className="text-center mb-16 px-6"
@@ -459,18 +467,17 @@ function WorksSection() {
           viewport={{ once: true }}
         >
           <h2
-            className="text-4xl md:text-5xl text-[#001666] mb-3"
-            style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
+            className="text-4xl md:text-5xl text-dark-blue mb-3 font-serif italic"
           >
             Design in action
           </h2>
-          <p className="text-base text-[#5F6566]">
+          <p className="text-base text-gray-light">
             Crafting functional, stunning products with founders.
           </p>
         </motion.div>
 
         {/* Project Cards - Grid 2 columns */}
-        <div className="works-grid">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-[1020px] px-6">
           {projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
@@ -486,12 +493,7 @@ function WorksSection() {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="text-[#F8F6F3] font-medium text-sm"
-            style={{
-              backgroundColor: '#FF5900',
-              padding: '12px 24px',
-              borderRadius: '99px',
-            }}
+            className="bg-orange text-cream font-medium text-sm py-3 px-6 rounded-full"
           >
             Load More
           </motion.button>
@@ -513,9 +515,9 @@ function StarIcon() {
 // Ability Section
 function AbilitySection() {
   return (
-    <section id="ability" className="ability-section">
+    <section id="ability" className="py-24 px-6 w-full flex flex-col items-center justify-center">
       {/* Tags Container */}
-      <div className="ability-tags">
+      <div className="flex flex-wrap gap-4 justify-center items-center max-w-[900px] mb-12">
         {skills.map((skill, index) => (
           <motion.div
             key={skill.name}
@@ -524,28 +526,25 @@ function AbilitySection() {
             viewport={{ once: true }}
             transition={{ delay: index * 0.05 }}
             whileHover={{ scale: 1.1, rotate: 0 }}
-            className="ability-tag"
+            className="bg-light-blue rounded-[70px] py-3 px-6 cursor-pointer"
             style={{
               transform: `${skill.transform} rotate(${skill.rotate}deg)`,
             }}
           >
-            <span>{skill.name}</span>
+            <span className="text-dark-blue text-sm font-medium whitespace-nowrap">{skill.name}</span>
           </motion.div>
         ))}
       </div>
 
       {/* Content */}
-      <div className="ability-content">
-        <div className="ability-title-row">
+      <div className="flex flex-col items-center justify-center text-center">
+        <div className="flex items-center justify-center gap-3 mb-4">
           <StarIcon />
-          <h2
-            className="ability-title"
-            style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
-          >
+          <h2 className="text-4xl md:text-5xl text-dark-blue font-serif italic m-0">
             What I bring to the table
           </h2>
         </div>
-        <p className="ability-description">
+        <p className="text-base text-gray-light m-0 max-w-[500px] leading-relaxed">
           Digital experiences that engage users and help your startup stand out from day one
         </p>
       </div>
