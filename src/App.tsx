@@ -415,9 +415,9 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
       className="block no-underline group"
     >
       {/* Card Container */}
-      <div className="bg-cream-dark rounded-2xl p-3 flex flex-col w-full border border-cream-dark">
+      <div className="bg-[#EBE9E4] rounded-[16px] p-3 flex flex-col w-full border border-[#EBE9E4]">
         {/* Cover Mask */}
-        <div className="rounded-lg overflow-hidden w-full aspect-[4/3]">
+        <div className="rounded-[8px] overflow-hidden w-full aspect-[4/3]">
           <img
             src={project.image}
             alt={project.title}
@@ -429,20 +429,20 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
         <div className="flex flex-col pt-4 px-1 pb-1 gap-4">
           {/* Project Info */}
           <div className="flex flex-col gap-2">
-            <h5 className="text-lg font-semibold text-dark-gray m-0 text-left">
+            <h5 className="text-lg font-semibold text-[#2A3132] m-0 text-left">
               {project.title}
             </h5>
-            <p className="text-sm text-gray m-0 leading-relaxed text-left">
+            <p className="text-sm text-[#767D7E] m-0 leading-relaxed text-left">
               {project.description}
             </p>
           </div>
 
           {/* Category & Icon Row */}
           <div className="flex items-center justify-between">
-            <span className="bg-dark-gray text-cream py-1.5 px-3.5 rounded-[20px] text-xs font-medium">
+            <span className="bg-[#2A3132] text-[#F8F6F3] py-1.5 px-3.5 rounded-[20px] text-xs font-medium">
               {project.category}
             </span>
-            <div className="w-8 h-8 bg-dark-gray rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+            <div className="w-8 h-8 bg-[#2A3132] rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2">
                 <path d="M7 17L17 7M17 7H7M17 7V17" />
               </svg>
@@ -466,18 +466,16 @@ function WorksSection() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
         >
-          <h2
-            className="text-4xl md:text-5xl text-dark-blue mb-3 font-serif italic"
-          >
+          <h2 className="text-4xl md:text-5xl text-[#001666] mb-3 font-serif italic">
             Design in action
           </h2>
-          <p className="text-base text-gray-light">
+          <p className="text-base text-[#5F6566]">
             Crafting functional, stunning products with founders.
           </p>
         </motion.div>
 
-        {/* Project Cards - Grid 2 columns */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-[1020px] px-6">
+        {/* Project Cards - Grid 2 columns centered */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-[1020px] px-6 mx-auto">
           {projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
@@ -493,7 +491,7 @@ function WorksSection() {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="bg-orange text-cream font-medium text-sm py-3 px-6 rounded-full"
+            className="bg-[#FF5900] text-[#F8F6F3] font-medium text-sm py-3 px-6 rounded-full"
           >
             Load More
           </motion.button>
