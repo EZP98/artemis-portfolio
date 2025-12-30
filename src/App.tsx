@@ -223,19 +223,8 @@ function Header() {
           className="text-center"
           whileHover={{ scale: 1.02 }}
         >
-          <a href="#" className="block">
-            <span
-              className="text-xl text-[#001666] block leading-tight"
-              style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
-            >
-              Ezio &
-            </span>
-            <span
-              className="text-lg text-[#001666] block leading-tight"
-              style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
-            >
-              Pappalardo
-            </span>
+          <a href="#" className="text-xl font-semibold text-[#001666]">
+            Ezio P.
           </a>
         </motion.div>
 
