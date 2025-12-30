@@ -149,7 +149,7 @@ function DraggableImage({ item }: { item: typeof heroImages[0] }) {
   )
 }
 
-// Arc Text Component - "This is Artemis"
+// Arc Text Component - "This is Ezio P."
 function ArcText() {
   const [rotation, setRotation] = useState(0)
 
@@ -193,7 +193,7 @@ function ArcText() {
           }}
         >
           <textPath href="#textCircle" startOffset="0%">
-            This is Artemis • This is Artemis • This is Artemis •
+            This is Ezio P. • This is Ezio P. • This is Ezio P. •
           </textPath>
         </text>
       </svg>
@@ -228,13 +228,13 @@ function Header() {
               className="text-xl text-[#001666] block leading-tight"
               style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
             >
-              Artemis &
+              Ezio &
             </span>
             <span
               className="text-lg text-[#001666] block leading-tight"
               style={{ fontFamily: "'Playfair Display', serif", fontStyle: 'italic' }}
             >
-              Artemis
+              Pappalardo
             </span>
           </a>
         </motion.div>
@@ -457,11 +457,11 @@ function ProjectCard({ project, index }: { project: typeof projects[0], index: n
 // Works Section
 function WorksSection() {
   return (
-    <section id="works" className="py-24 w-full">
-      <div className="w-full flex flex-col items-center justify-center">
+    <section id="works" className="py-24 px-6 md:px-10">
+      <div className="max-w-[1100px] mx-auto">
         {/* Section Title */}
         <motion.div
-          className="text-center mb-16 px-6"
+          className="text-center mb-16"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -474,8 +474,8 @@ function WorksSection() {
           </p>
         </motion.div>
 
-        {/* Project Cards - Grid 2 columns centered */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5 w-full max-w-[1020px] px-6 mx-auto">
+        {/* Project Cards - Grid 2 columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {projects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
           ))}
@@ -513,38 +513,40 @@ function StarIcon() {
 // Ability Section
 function AbilitySection() {
   return (
-    <section id="ability" className="py-24 px-6 w-full flex flex-col items-center justify-center">
-      {/* Tags Container */}
-      <div className="flex flex-wrap gap-4 justify-center items-center max-w-[900px] mb-12">
-        {skills.map((skill, index) => (
-          <motion.div
-            key={skill.name}
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.05 }}
-            whileHover={{ scale: 1.1, rotate: 0 }}
-            className="bg-light-blue rounded-[70px] py-3 px-6 cursor-pointer"
-            style={{
-              transform: `${skill.transform} rotate(${skill.rotate}deg)`,
-            }}
-          >
-            <span className="text-dark-blue text-sm font-medium whitespace-nowrap">{skill.name}</span>
-          </motion.div>
-        ))}
-      </div>
-
-      {/* Content */}
-      <div className="flex flex-col items-center justify-center text-center">
-        <div className="flex items-center justify-center gap-3 mb-4">
-          <StarIcon />
-          <h2 className="text-4xl md:text-5xl text-dark-blue font-serif italic m-0">
-            What I bring to the table
-          </h2>
+    <section id="ability" className="py-24 px-6 md:px-10">
+      <div className="max-w-[1100px] mx-auto flex flex-col items-center">
+        {/* Tags Container */}
+        <div className="flex flex-wrap gap-4 justify-center items-center max-w-[900px] mb-12">
+          {skills.map((skill, index) => (
+            <motion.div
+              key={skill.name}
+              initial={{ opacity: 0, scale: 0.8 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.05 }}
+              whileHover={{ scale: 1.1, rotate: 0 }}
+              className="bg-[#CADCFC] rounded-[70px] py-3 px-6 cursor-pointer"
+              style={{
+                transform: `${skill.transform} rotate(${skill.rotate}deg)`,
+              }}
+            >
+              <span className="text-[#001666] text-sm font-medium whitespace-nowrap">{skill.name}</span>
+            </motion.div>
+          ))}
         </div>
-        <p className="text-base text-gray-light m-0 max-w-[500px] leading-relaxed">
-          Digital experiences that engage users and help your startup stand out from day one
-        </p>
+
+        {/* Content */}
+        <div className="flex flex-col items-center text-center">
+          <div className="flex items-center justify-center gap-3 mb-4">
+            <StarIcon />
+            <h2 className="text-4xl md:text-5xl text-[#001666] font-serif italic m-0">
+              What I bring to the table
+            </h2>
+          </div>
+          <p className="text-base text-[#5F6566] m-0 max-w-[500px] leading-relaxed">
+            Digital experiences that engage users and help your startup stand out from day one
+          </p>
+        </div>
       </div>
     </section>
   )
@@ -553,8 +555,8 @@ function AbilitySection() {
 // Contact Section
 function ContactSection() {
   return (
-    <section id="contact" className="py-32 px-8 md:px-16">
-      <div className="max-w-4xl mx-auto text-center">
+    <section id="contact" className="py-32 px-6 md:px-10">
+      <div className="max-w-[900px] mx-auto text-center">
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -574,7 +576,7 @@ function ContactSection() {
           Have a project in mind? Let's create something amazing.
         </motion.p>
         <motion.a
-          href="mailto:hello@artemis.design"
+          href="mailto:eziopappalardo98@gmail.com"
           initial={{ opacity: 0, scale: 0.9 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
@@ -601,10 +603,10 @@ function ContactSection() {
 // Footer
 function Footer() {
   return (
-    <footer className="py-8 px-8 border-t border-[#001666]/10">
-      <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+    <footer className="py-8 px-6 md:px-10 border-t border-[#001666]/10">
+      <div className="max-w-[1100px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
         <p className="text-sm text-[#2A3132]/50">
-          © 2025 Artemis. All rights reserved.
+          © 2025 Ezio Pappalardo. All rights reserved.
         </p>
         <div className="flex gap-6">
           {['Twitter', 'LinkedIn', 'Dribbble', 'Behance'].map((social) => (
