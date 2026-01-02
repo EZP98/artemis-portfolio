@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { motion, useMotionValue } from 'framer-motion'
 
-// Hero draggable images with exact positions and rotations from Framer
+// Hero draggable images with exact positions and rotations
 const heroImages = [
   {
     id: 1,
@@ -58,7 +58,7 @@ const galleryItems = [
   { type: 'video', src: 'https://framerusercontent.com/assets/A4ctABxvbRaq6aq99HPazcljFA.mp4', width: 240, height: 320 },
 ]
 
-// Projects with Framer data
+// Projects data
 const projects = [
   {
     id: 1,
@@ -90,9 +90,9 @@ const projects = [
   },
 ]
 
-// Skills with exact rotations and transforms from Framer
+// Skills with rotations and transforms
 const skills = [
-  { name: 'Framer Development', rotate: -4, transform: '' },
+  { name: 'No-Code Development', rotate: -4, transform: '' },
   { name: 'Branding', rotate: 9, transform: '' },
   { name: 'Visual Design', rotate: -15, transform: '' },
   { name: 'User Interface Design', rotate: 7, transform: '' },
@@ -490,7 +490,7 @@ function WorksSection() {
   )
 }
 
-// Star Icon - matching Framer
+// Star Icon
 function StarIcon() {
   return (
     <svg width="25" height="25" viewBox="0 0 25 25" fill="#001666">
