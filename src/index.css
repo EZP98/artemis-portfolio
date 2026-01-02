@@ -18,7 +18,6 @@
 /* Base styles */
 html, body {
   width: 100%;
-  min-height: 100vh;
   background-color: var(--color-cream);
   color: var(--color-dark-gray);
   font-family: var(--font-sans);
